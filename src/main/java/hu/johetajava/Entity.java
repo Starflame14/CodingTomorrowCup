@@ -15,7 +15,7 @@ public class Entity {
     /**
      * The absolute direction of the entity's movement
      */
-    protected Direction direction;
+    protected Directions direction;
 
     /**
      * The current speed of the entity
@@ -25,10 +25,10 @@ public class Entity {
     /**
      * The expected command of the entity
      */
-    protected Command nextCommand;
+    protected Commands nextCommand;
 
 
-    public Entity(int id, Position position, Direction direction, int speed, Command nextCommand) {
+    public Entity(int id, Position position, Directions direction, int speed, Commands nextCommand) {
         this.id = id;
         this.position = position;
         this.direction = direction;
@@ -44,7 +44,7 @@ public class Entity {
      * @param speed     The current speed of the
      * @return The position after the movement
      */
-    public static Position getPositionByDirection(Position position, Direction direction, int speed) {
+    public static Position getPositionByDirection(Position position, Directions direction, int speed) {
         // TODO get pos by direction
         return position;
     }
@@ -57,38 +57,38 @@ public class Entity {
      * Rotate the entity by 90° in a specified direction
      * @param direction
      */
-    public void turn(Direction direction) {
+    public void turn(Directions direction) {
         // TURN LEFT:
-        if (direction == Direction.LEFT) {
+        if (direction == Directions.LEFT) {
             switch (getDirection()) {
                 case LEFT:
-                    setDirection(Direction.DOWN);
+                    setDirection(Directions.DOWN);
                     break;
                 case DOWN:
-                    setDirection(Direction.RIGHT);
+                    setDirection(Directions.RIGHT);
                     break;
                 case RIGHT:
-                    setDirection(Direction.UP);
+                    setDirection(Directions.UP);
                     break;
                 case UP:
-                    setDirection(Direction.LEFT);
+                    setDirection(Directions.LEFT);
                     break;
             }
         }
         // TURN RIGHT
-        else if(direction == Direction.RIGHT){
+        else if(direction == Directions.RIGHT){
             switch (getDirection()) {
                 case LEFT:
-                    setDirection(Direction.UP);
+                    setDirection(Directions.UP);
                     break;
                 case DOWN:
-                    setDirection(Direction.LEFT);
+                    setDirection(Directions.LEFT);
                     break;
                 case RIGHT:
-                    setDirection(Direction.DOWN);
+                    setDirection(Directions.DOWN);
                     break;
                 case UP:
-                    setDirection(Direction.RIGHT);
+                    setDirection(Directions.RIGHT);
                     break;
             }
         }
@@ -124,11 +124,11 @@ public class Entity {
         this.position = position;
     }
 
-    public Direction getDirection() {
+    public Directions getDirection() {
         return direction;
     }
 
-    public void setDirection(Direction direction) {
+    public void setDirection(Directions direction) {
         this.direction = direction;
     }
 

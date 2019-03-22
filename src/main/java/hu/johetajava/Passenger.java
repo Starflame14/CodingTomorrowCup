@@ -9,7 +9,7 @@ public class Passenger extends Entity{
     protected int carId;
 
 
-    public Passenger(int id, Position position, Direction direction, int speed, Command nextCommand, int carId, Position destination) {
+    public Passenger(int id, Position position, Directions direction, int speed, Commands nextCommand, int carId, Position destination) {
         super(id, position, direction, speed, nextCommand);
         this.destination = destination;
         this.carId = carId;

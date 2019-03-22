@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 public class Main {
@@ -18,11 +19,14 @@ public class Main {
         sendToken();
         World world = new World();
 
+        sendTick();
+
+        System.out.println(World.cars);
+
     }
 
 
     public void nextTick(World world) {
-
 
 
     }
@@ -51,7 +55,7 @@ public class Main {
     }
 
 
-    public static void sendTick(){
+    public static void sendTick() {
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("token", TOKEN);
@@ -74,12 +78,18 @@ public class Main {
                     JSONArray jsonCars = jsonObject1.getJSONArray("cars");
 
                     World.cars.clear();
-                    for(int i = 0; i < jsonCars.length(); i++) {
+                    for (int i = 0; i < jsonCars.length(); i++) {
                         JSONObject jsonCar = jsonCars.getJSONObject(i);
 
-                        //World.cars.add(new Car(
-
-                    //    ));
+                        World.cars.add(new Car(
+                                jsonCar.getInt("id"),
+                                new Position(jsonCar.getJSONObject("pos").getInt("x"), jsonCar.getJSONObject("pos").getInt("y")),
+                                Direction.getDirectionBySign(jsonCar.getString("direction").charAt(0)),
+                                jsonCar.getInt("speed"),
+                                Command.getCommandBySign(jsonCar.getString("next_command").charAt(0)),
+                                jsonCar.getInt("life"),
+                                jsonCar.getInt("transported")
+                        ));
                     }
 
                 });
@@ -87,11 +97,11 @@ public class Main {
     }
 
 
-    public static void error(String message){
+    public static void error(String message) {
         System.out.println("ERROR: " + message);
     }
 
-    public static void log(String message){
+    public static void log(String message) {
         System.out.println(message);
     }
 

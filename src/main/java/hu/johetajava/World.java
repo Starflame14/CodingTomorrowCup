@@ -18,6 +18,10 @@ public class World {
     public static Field[][] map;
 
     World() {
+        cars = new ArrayList<>();
+        passengers = new ArrayList<>();
+        pedestrians = new ArrayList<>();
+
         loadMap();
     }
 
