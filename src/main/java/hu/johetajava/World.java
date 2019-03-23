@@ -3,12 +3,15 @@ package hu.johetajava;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class World {
 
     public static int gameId;
     public static int tick;
     public static int carId;
+    public static String[] messages;
 
     public static ArrayList<Car> cars;
     public static ArrayList<Passenger> passengers;
@@ -84,4 +87,15 @@ public class World {
         */
     }
 
+
+    public static boolean isDead(){
+        List<String> message_lsit = Arrays.asList(messages);
+        return message_lsit.contains("REAL_TIMEOUT")
+                || message_lsit.contains("COMMUNICATION")
+                || message_lsit.contains("CRASHED")
+                || message_lsit.contains("TICK_TIMEOUT");
+
+
+
+    }
 }

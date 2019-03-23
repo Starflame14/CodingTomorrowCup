@@ -2,16 +2,40 @@ package hu.johetajava;
 
 public enum Commands {
     // Normal commands:
+    NO_OP,
     ACCELERATION,
     DECELERATION,
-    TURN_LEFT,
-    TURN_RIGHT,
-    CLEAR_LAST_COMMAND
+    CAR_INDEX_LEFT,
+    CAR_INDEX_RIGHT,
+    X,
+
+    // Immediate commands:
+    CLEAR,
+    FULL_THROTTLE,
+    EMERGENCYY_BRAKE,
+    GO_LEFT,
+    GO_RIGHT
 }
 
-class Command{
-    public static Commands getCommandBySign(char sign){
-        // TODO get command by sign
-        return Commands.TURN_LEFT;
+class Command {
+    public static Commands getNextCommandBySign(char sign) {
+        switch (sign) {
+            case '0':
+                return Commands.NO_OP;
+            case '+':
+                return Commands.ACCELERATION;
+            case '-':
+                return Commands.DECELERATION;
+            case '<':
+                return Commands.CAR_INDEX_LEFT;
+            case '>':
+                return Commands.CAR_INDEX_RIGHT;
+            case 'X':
+                return Commands.X;
+            default:
+                Main.error("INVALID COMMAND IDENTIFIER!");
+                return Commands.NO_OP;
+        }
+
     }
 }

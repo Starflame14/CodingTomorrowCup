@@ -5,6 +5,7 @@ enum Directions {
     DOWN,
     LEFT,
     RIGHT,
+    NONE
 }
 class Direction{
     public static Directions getDirectionBySign(char sign){

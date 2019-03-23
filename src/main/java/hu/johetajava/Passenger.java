@@ -9,8 +9,8 @@ public class Passenger extends Entity{
     protected int carId;
 
 
-    public Passenger(int id, Position position, Directions direction, int speed, Commands nextCommand, int carId, Position destination) {
-        super(id, position, direction, speed, nextCommand);
+    public Passenger(int id, Position position, int carId, Position destination) {
+        super(id, position, Directions.NONE, 0, Commands.NO_OP);
         this.destination = destination;
         this.carId = carId;
     }
@@ -20,4 +20,13 @@ public class Passenger extends Entity{
         this.speed = Math.min(MAX_SPEED, Math.max(0, speed));
     }
 
+    @Override
+    public String toString() {
+        return "Passenger{" +
+                "destination=" + destination +
+                ", carId=" + carId +
+                ", id=" + id +
+                ", position=" + position +
+                '}';
+    }
 }
