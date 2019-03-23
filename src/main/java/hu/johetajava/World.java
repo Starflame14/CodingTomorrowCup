@@ -1,7 +1,9 @@
 package hu.johetajava;
 
-import java.io.*;
-import java.net.URL;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,8 +13,9 @@ public class World {
     public static int gameId;
     public static int tick;
     public static int carId;
-    public static String[] messages;
+    public static String[] messages = new String[0];
 
+    public static Car car;
     public static ArrayList<Car> cars;
     public static ArrayList<Passenger> passengers;
     public static ArrayList<Pedestrian> pedestrians;
@@ -71,6 +74,7 @@ public class World {
 
             map = fieldLines.toArray(new Field[0][]);
 
+            Main.log("MAP betöltve");
         } catch (FileNotFoundException e) {
             Main.error("Map file reading error.");
         } catch (IOException e) {
@@ -89,11 +93,11 @@ public class World {
 
 
     public static boolean isDead(){
-        List<String> message_lsit = Arrays.asList(messages);
-        return message_lsit.contains("REAL_TIMEOUT")
-                || message_lsit.contains("COMMUNICATION")
-                || message_lsit.contains("CRASHED")
-                || message_lsit.contains("TICK_TIMEOUT");
+        List<String> message_list = Arrays.asList(messages);
+        return message_list.contains("REAL_TIMEOUT")
+                || message_list.contains("COMMUNICATION")
+                || message_list.contains("CRASHED")
+                || message_list.contains("TICK_TIMEOUT");
 
 
 

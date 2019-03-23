@@ -12,33 +12,36 @@ public class Main {
     public static String GAME_SERVER_URI = "https://ambrusweb11.hu/felho/codingTomorrowCup.json";
 
     public static void main(String[] args) {
-        sendToken();
         World world = new World();
 
-        // TODO set the command
+        sendToken();
 
-
-        while (!World.isDead()) {
-            sendCommand(nextTick());
-        }
-
+        sendCommand(Commands.NO_OP); // 0th tick: look around
+        //while (!World.isDead()) {
+        for (int i = 0; i < 10; i++) sendCommand(nextTick());
+        //}
 
     }
 
 
     public static Commands nextTick() {
 
+        log("-- " + World.tick + ". TICK -----------------\n");
+
         System.out.println(World.cars);
         System.out.println(World.pedestrians);
         System.out.println(World.passengers);
+
+        System.out.println(World.car);
 
         System.out.println("MESSAGES: ");
         for (int i = 0; i < World.messages.length; i++) {
             System.out.println(" - " + World.messages[i]);
         }
-        System.out.println("---------------------------");
+        log("---------------------------");
 
 
+        // TODO set command
         return Commands.NO_OP;
 
     }
@@ -54,13 +57,16 @@ public class Main {
                 .body(jsonObject)
                 .asJson()
 
-                .ifFailure(response -> {
+                .ifFailure((response) -> {
                     System.out.println("ERROR: Token elküldése");
                 })
-                .ifSuccess(response -> {
+                .ifSuccess((response) -> {
 
-                    JSONObject jsonObject1 = response.getBody().getObject();
-
+                    JSONArray messages = response.getBody().getObject().getJSONArray("messages");
+                    log("TOKEN sikeresen elküldve.\nMESSAGES:");
+                    for (int i = 0; i < messages.length(); i++) {
+                        log(" - " + messages.getString(i));
+                    }
 
                 });
 
@@ -69,14 +75,22 @@ public class Main {
 
     public static void sendCommand(Commands command) {
 
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("token", TOKEN);
+        JSONObject requestObject = new JSONObject();
+        requestObject.put("token", TOKEN);
+
+        JSONObject responseId = new JSONObject();
+        responseId.put("game_id", World.gameId);
+        responseId.put("tick", World.tick);
+        responseId.put("car_id", World.carId);
+
+        requestObject.put("response_id", responseId);
+        requestObject.put("command", command);
 
         Unirest.post(GAME_SERVER_URI)
                 .header("accept", "application/json")
                 .header("Content-Type", "application/json")
 
-                .body(jsonObject)
+                .body(requestObject)
                 .asJson()
 
                 .ifFailure(response -> {
@@ -85,6 +99,11 @@ public class Main {
                 .ifSuccess(response -> {
 
                     JSONObject jsonObject1 = response.getBody().getObject();
+
+                    // Get request data
+                    World.carId = jsonObject1.getJSONObject("request_id").getInt("car_id");
+                    World.tick = jsonObject1.getJSONObject("request_id").getInt("tick");
+                    World.gameId = jsonObject1.getJSONObject("request_id").getInt("game_id");
 
                     // Get CAR data
                     JSONArray jsonCars = jsonObject1.getJSONArray("cars");
@@ -104,6 +123,11 @@ public class Main {
                         ));
                     }
 
+                    for (int i = 0; i < World.cars.size(); i++) {
+                        if (World.cars.get(i).id == World.carId) {
+                            World.car = World.cars.get(i);
+                        }
+                    }
 
                     // Get pedestrians:
                     JSONArray jsonPedestrians = jsonObject1.getJSONArray("pedestrians");
