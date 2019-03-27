@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Main {
 
     public static String TOKEN = "ELvHmVVgGrUgn1uwRaM1mYCTJ5VBLwGwEyw0SHDAmiCokQTvOBulyewN7H8HGneo0aX59pP";
-    public static String GAME_SERVER_URI = "https://ambrusweb11.hu/felho/codingTomorrowCup.json";
+    public static String GAME_SERVER_URI = "http://31.46.64.35:12323";
 
     public static void main(String[] args) {
         World world = new World();
@@ -17,9 +17,9 @@ public class Main {
         sendToken();
 
         sendCommand(Commands.NO_OP); // 0th tick: look around
-        //while (!World.isDead()) {
-        for (int i = 0; i < 10; i++) sendCommand(nextTick());
-        //}
+        while (!World.isDead()) {
+            sendCommand(nextTick());
+        }
 
     }
 
@@ -49,6 +49,7 @@ public class Main {
     public static void sendToken() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("token", TOKEN);
+
 
         Unirest.post(GAME_SERVER_URI)
                 .header("accept", "application/json")
