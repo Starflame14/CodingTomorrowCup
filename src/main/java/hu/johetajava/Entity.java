@@ -4,6 +4,7 @@ public class Entity {
     /**
      * ID
      * unique identifier
+     * It's -1 if something has no id
      */
     protected int id;
 
@@ -26,7 +27,6 @@ public class Entity {
      * The expected command of the entity
      */
     protected Commands nextCommand;
-
 
     public Entity(int id, Position position, Directions direction, int speed, Commands nextCommand) {
         this.id = id;

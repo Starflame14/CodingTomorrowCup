@@ -33,7 +33,7 @@ class Command {
             case 'X':
                 return Commands.X;
             default:
-                Main.error("INVALID COMMAND IDENTIFIER!");
+                Main.error("INVALID COMMAND IDENTIFIER \"" + sign + "\"");
                 return Commands.NO_OP;
         }
 

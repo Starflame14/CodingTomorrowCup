@@ -11,7 +11,7 @@ import java.util.List;
 public class World {
 
     public static int gameId;
-    public static int tick;
+    public static int tick = 0;
     public static int carId;
     public static String[] messages = new String[0];
 
@@ -99,7 +99,13 @@ public class World {
                 || message_list.contains("CRASHED")
                 || message_list.contains("TICK_TIMEOUT");
 
+    }
 
+    public static boolean isThere(Field field, Position position) {
+        return getField(position).equals(field);
+    }
 
+    private static Field getField(Position position) {
+        return map[position.y][position.x];
     }
 }

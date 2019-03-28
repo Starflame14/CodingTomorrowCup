@@ -16,4 +16,14 @@ public class Position {
                 ", y=" + y +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Position pos2 = (Position) obj;
+        return this.x == pos2.x && this.y == pos2.y;
+    }
+
+    public Position clone() {
+        return new Position(x, y);
+    }
 }
